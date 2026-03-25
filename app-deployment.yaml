@@ -18,6 +18,13 @@ metadata:
   name: capsule-app
 spec:
   replicas: 2
+
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+
   selector:
     matchLabels:
       app: capsule-app
@@ -34,6 +41,13 @@ spec:
         envFrom:
         - configMapRef:
             name: retail-config
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "200m"
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
 ---
 apiVersion: v1
 kind: Service
